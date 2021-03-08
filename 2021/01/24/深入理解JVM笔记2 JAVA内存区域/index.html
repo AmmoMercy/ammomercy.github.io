@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"ammomercy.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="深入理解JVM笔记2 主要内存区域程序计数器PC与计算机硬件中的PC类似用于指示当前线程运行到的字节码指令的地址，当运行本地方法时，pc为undefined。  唯一一个没有规定OutOfMemoryError的区域。 虚拟机栈线程私有，用于存放当前线程的方法栈帧。 栈帧是由局部变量表、操作数栈、动态链接以及方法出口等组成。 其中局部变量表不仅包含局部变量（基本类型直接存值，对象类型存引用）还包括">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入理解JVM2 JAVA内存区域">
+<meta property="og:url" content="http://ammomercy.github.io/2021/01/24/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3JVM%E7%AC%94%E8%AE%B02%20JAVA%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F/index.html">
+<meta property="og:site_name" content="AmmoMercy的技术博客">
+<meta property="og:description" content="深入理解JVM笔记2 主要内存区域程序计数器PC与计算机硬件中的PC类似用于指示当前线程运行到的字节码指令的地址，当运行本地方法时，pc为undefined。  唯一一个没有规定OutOfMemoryError的区域。 虚拟机栈线程私有，用于存放当前线程的方法栈帧。 栈帧是由局部变量表、操作数栈、动态链接以及方法出口等组成。 其中局部变量表不仅包含局部变量（基本类型直接存值，对象类型存引用）还包括">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-01-24T13:47:35.042Z">
+<meta property="article:modified_time" content="2021-01-24T13:47:35.042Z">
+<meta property="article:author" content="AmmoMercy">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://ammomercy.github.io/2021/01/24/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3JVM%E7%AC%94%E8%AE%B02%20JAVA%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>深入理解JVM2 JAVA内存区域 | AmmoMercy的技术博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">AmmoMercy的技术博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Stay hungry, stay foolish.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://ammomercy.github.io/2021/01/24/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3JVM%E7%AC%94%E8%AE%B02%20JAVA%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="AmmoMercy">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AmmoMercy的技术博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          深入理解JVM2 JAVA内存区域
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-01-24 21:47:35" itemprop="dateCreated datePublished" datetime="2021-01-24T21:47:35+08:00">2021-01-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JVM/" itemprop="url" rel="index"><span itemprop="name">JVM</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>深入理解JVM笔记2</p>
+<h3 id="主要内存区域"><a href="#主要内存区域" class="headerlink" title="主要内存区域"></a>主要内存区域</h3><h4 id="程序计数器PC"><a href="#程序计数器PC" class="headerlink" title="程序计数器PC"></a>程序计数器PC</h4><p>与计算机硬件中的PC类似用于指示当前线程运行到的字节码指令的地址，当运行本地方法时，pc为undefined。 </p>
+<p>唯一一个没有规定OutOfMemoryError的区域。</p>
+<h4 id="虚拟机栈"><a href="#虚拟机栈" class="headerlink" title="虚拟机栈"></a>虚拟机栈</h4><p>线程私有，用于存放当前线程的方法栈帧。 栈帧是由局部变量表、操作数栈、动态链接以及方法出口等组成。</p>
+<p>其中局部变量表不仅包含局部变量（基本类型直接存值，对象类型存引用）还包括了returnAddress（用于指示该方法完成后返回的字节码指令地址）。局部变量表的大小在编译之后就确定了，在方法的运行期间是不会改变的。比如一个int变量只可能存放int，对象的引用只能存放该对象类型的引用，自然不会变化。</p>
+<h4 id="本地方法栈"><a href="#本地方法栈" class="headerlink" title="本地方法栈"></a>本地方法栈</h4><p>与虚拟机栈类似，只不过存放的是本地方法。所以，HotSpot虚拟机将其与虚拟机栈直接合二为一。</p>
+<h4 id="JAVA堆"><a href="#JAVA堆" class="headerlink" title="JAVA堆"></a>JAVA堆</h4><p>又叫GC堆，几乎所有对象分配的场所，是JVM中最大的一块内存。之所以说是几乎所有，是因为当前JIT和逃逸分析技术的成熟，比如栈上分配和标量替换优化技术，使得对象不一定在堆上分配。堆由GC管理（见下一章GC）。</p>
+<p>线程私有，但可以为了快速释放和分配内存而为每个线程分配私有的缓冲区（Thread Local Allocattion Buffer, TLAB）。</p>
+<p>分为新生代、老年代。</p>
+<p>新生代：有from survivor、to survivor、 eden。两个survivor用于存放young gc之后存活的对象，eden用于存放新生成的对象。因为大多数对象存活时间都很短，即所谓的“朝生夕死”，所以eden的容量较大，survivor空间较小。默认配置下from to各占1/10，eden占8/10。</p>
+<p>堆的空间一般都是自动扩展的，通过-Xms和-Xmx两个参数来控制堆的最小和最大容量，当最大和最小容量设为相同值时，就变成了固定大小。</p>
+<h4 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h4><p>存放类的信息，逻辑上是堆的一部分。堆上存放对象，对象来自于类，两者十分相似，所以将方法区描述为堆的一部分是很自然的。在HotSpot上，对方法区的回收机制与堆类似，故其又称为永久代。不过在JDK1.8中，方法区被从堆中移到了直接内存里，永久代也不复存在了，取而代之的是元空间。</p>
+<h4 id="运行时常量池"><a href="#运行时常量池" class="headerlink" title="运行时常量池"></a>运行时常量池</h4><p>方法区的一部分，存放编译期生成的各种常量。jdk1.8在物理实现上将其从方法区移出，存放在堆上单独开辟的空间，但逻辑上仍然是方法区的一部分。</p>
+<h4 id="直接内存"><a href="#直接内存" class="headerlink" title="直接内存"></a>直接内存</h4><p>NIO利用该区域进行I/O，其在堆中有一个DirectByteBuffer对象，在该对象中存有直接内存的引用。使用直接内存的好处是可以避免在JAVA堆和Native堆中来回复制。    </p>
+<h4 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h4><p>上述所有区域中，只有pc没有OutOfMemory异常（毕竟只是一个记录执行位置的指针），其他区域都有可能产尘OutOfMemory异常。同时，对于虚拟机栈和本地方法栈来说，两个区域还会产生StackOverflow异常</p>
+<table>
+<thead>
+<tr>
+<th>线程私有</th>
+<th>线程共享</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>pc、栈</td>
+<td>堆、方法区</td>
+</tr>
+</tbody></table>
+<h3 id="对象的创建"><a href="#对象的创建" class="headerlink" title="对象的创建"></a>对象的创建</h3><h4 id="检查类是否被加载"><a href="#检查类是否被加载" class="headerlink" title="检查类是否被加载"></a>检查类是否被加载</h4><p>对象的创建依赖于类的信息，所以在创建一个对象之前应该先确定该对象的类是否已经被加载到jvm。具体实现是检查常量池中是否包含类的引用。</p>
+<h4 id="分配内存"><a href="#分配内存" class="headerlink" title="分配内存"></a>分配内存</h4><p>在堆上的空闲区为一个对象开辟一块区域。所以就必须要有空闲区进行管理的方法。一种方法是将已分配的空间集中在一侧，空闲区集中在另一侧（这种情况称为<strong>规整</strong>的），这样每次分配空间的时候将空闲区靠近分界的区域分配给新创建的内存即可。同时，利用一个指针来指示两个区域的分界，这种方法称为指针碰撞法。如果空闲内存和已使用的内存是交错的（即<strong>不规整</strong>），那么要维护一个列表来记录每个空闲块的地址和大小等信息，这种方法称为空闲链表法。</p>
+<h4 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h4><p>对象的创建是十分频繁的，那么就需要进行一些操作来确保对象的分配是线程安全的。一是使用CAS加上失败重试来进行同步。另一种方法是使用TLAB，每个线程均在自己的TLAB中新建对象， 只有TLAB满了之后申请新的TLAB时，才需要同步锁定。</p>
+<h4 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h4><p>将分配到的内存空间设为零值（int是0，对象是null等），如果使用TLAB也可提前至TLAB进行。</p>
+<h4 id="一些设置"><a href="#一些设置" class="headerlink" title="一些设置"></a>一些设置</h4><p>将一些必要的信息写入对象，如hashcode、分代年龄、类信息等。</p>
+<h3 id="对象的内存布局"><a href="#对象的内存布局" class="headerlink" title="对象的内存布局"></a>对象的内存布局</h3><h4 id="对象头"><a href="#对象头" class="headerlink" title="对象头"></a>对象头</h4><p>两部分组成。第一部分用于存储对象本身的信息，如hashcode、分代年龄、与锁相关的一些信息等，也叫Mark Word。第二部分是只想该对象所属的类的指针。</p>
+<h4 id="对象字段"><a href="#对象字段" class="headerlink" title="对象字段"></a>对象字段</h4><p>对象中定义的字段等。</p>
+<h4 id="对齐填充"><a href="#对齐填充" class="headerlink" title="对齐填充"></a>对齐填充</h4><p>jvm规定对象的长度必须是8字节的整数倍，如果前两项大小加起来不是8字节整数倍就需要进行填充。</p>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><h4 id="对象的访问"><a href="#对象的访问" class="headerlink" title="对象的访问"></a>对象的访问</h4><p>使用对象时需获取它的类型信息，那么如何获取呢？有两种方法：一种是利用在前面说过的，对象头的第二部分指向了对象所属的类，直接利用这个指针就可以，这被成为直接指针方法。另一种是维护一个句柄，句柄中有两项内容，一项是指向对象的指针，另一项是指向对象所对应的类的指针。</p>
+<p>在栈帧中的局部变量表中，如果使用第一种方法，那么引用是直接指向对象的指针，而第二种方法的则指向句柄。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/01/24/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3JVM%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%201%20JDK%E3%80%81JRE%E4%B8%8EJVM/" rel="prev" title="深入理解JVM1 JDK、JRE与JVM">
+      <i class="fa fa-chevron-left"></i> 深入理解JVM1 JDK、JRE与JVM
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/03/08/%E6%96%87%E7%8C%AE%E9%98%85%E8%AF%BB/" rel="next" title="文献阅读：Reinforcement learning-driven address mapping and caching for flash-based remote sensing image processing">
+      文献阅读：Reinforcement learning-driven address mapping and caching for flash-based remote sensing image processing <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F"><span class="nav-number">1.</span> <span class="nav-text">主要内存区域</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E8%AE%A1%E6%95%B0%E5%99%A8PC"><span class="nav-number">1.1.</span> <span class="nav-text">程序计数器PC</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%A0%88"><span class="nav-number">1.2.</span> <span class="nav-text">虚拟机栈</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E6%96%B9%E6%B3%95%E6%A0%88"><span class="nav-number">1.3.</span> <span class="nav-text">本地方法栈</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JAVA%E5%A0%86"><span class="nav-number">1.4.</span> <span class="nav-text">JAVA堆</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E5%8C%BA"><span class="nav-number">1.5.</span> <span class="nav-text">方法区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E6%97%B6%E5%B8%B8%E9%87%8F%E6%B1%A0"><span class="nav-number">1.6.</span> <span class="nav-text">运行时常量池</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5%E5%86%85%E5%AD%98"><span class="nav-number">1.7.</span> <span class="nav-text">直接内存</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">1.8.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%9B%E5%BB%BA"><span class="nav-number">2.</span> <span class="nav-text">对象的创建</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E7%B1%BB%E6%98%AF%E5%90%A6%E8%A2%AB%E5%8A%A0%E8%BD%BD"><span class="nav-number">2.1.</span> <span class="nav-text">检查类是否被加载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%86%E9%85%8D%E5%86%85%E5%AD%98"><span class="nav-number">2.2.</span> <span class="nav-text">分配内存</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8"><span class="nav-number">2.3.</span> <span class="nav-text">线程安全</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">2.4.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.5.</span> <span class="nav-text">一些设置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80"><span class="nav-number">3.</span> <span class="nav-text">对象的内存布局</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E5%A4%B4"><span class="nav-number">3.1.</span> <span class="nav-text">对象头</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E5%AD%97%E6%AE%B5"><span class="nav-number">3.2.</span> <span class="nav-text">对象字段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%B9%E9%BD%90%E5%A1%AB%E5%85%85"><span class="nav-number">3.3.</span> <span class="nav-text">对齐填充</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">4.</span> <span class="nav-text">其他</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E7%9A%84%E8%AE%BF%E9%97%AE"><span class="nav-number">4.1.</span> <span class="nav-text">对象的访问</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">AmmoMercy</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ammomercy" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ammomercy" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:chuanjianli@outlook.com" title="E-Mail → mailto:chuanjianli@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      GF's blog
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.yayako.cn/" title="https:&#x2F;&#x2F;www.yayako.cn&#x2F;" rel="noopener" target="_blank">yayako</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AmmoMercy</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

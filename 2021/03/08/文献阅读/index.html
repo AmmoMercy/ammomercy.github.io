@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"ammomercy.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Reinforcement learning-driven address mapping and caching for flash-based remote sensing image processingIntroduction 遥感等地球观测技术生成的图像数据量很大，传统地面站计算方式信息传输量大，计算工作下沉到在轨设备是一种新的趋势。（类似雾计算的概念？）  对I&#x2F;O要求高，遂使用Fla">
+<meta property="og:type" content="article">
+<meta property="og:title" content="文献阅读：Reinforcement learning-driven address mapping and caching for flash-based remote sensing image processing">
+<meta property="og:url" content="http://ammomercy.github.io/2021/03/08/%E6%96%87%E7%8C%AE%E9%98%85%E8%AF%BB/index.html">
+<meta property="og:site_name" content="AmmoMercy的技术博客">
+<meta property="og:description" content="Reinforcement learning-driven address mapping and caching for flash-based remote sensing image processingIntroduction 遥感等地球观测技术生成的图像数据量很大，传统地面站计算方式信息传输量大，计算工作下沉到在轨设备是一种新的趋势。（类似雾计算的概念？）  对I&#x2F;O要求高，遂使用Fla">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-03-08T02:54:05.726Z">
+<meta property="article:modified_time" content="2021-03-08T02:55:39.133Z">
+<meta property="article:author" content="AmmoMercy">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://ammomercy.github.io/2021/03/08/%E6%96%87%E7%8C%AE%E9%98%85%E8%AF%BB/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>文献阅读：Reinforcement learning-driven address mapping and caching for flash-based remote sensing image processing | AmmoMercy的技术博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">AmmoMercy的技术博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Stay hungry, stay foolish.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://ammomercy.github.io/2021/03/08/%E6%96%87%E7%8C%AE%E9%98%85%E8%AF%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="AmmoMercy">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AmmoMercy的技术博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          文献阅读：Reinforcement learning-driven address mapping and caching for flash-based remote sensing image processing
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-03-08 10:54:05 / 修改时间：10:55:39" itemprop="dateCreated datePublished" datetime="2021-03-08T10:54:05+08:00">2021-03-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%96%87%E7%8C%AE%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">文献阅读</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Reinforcement-learning-driven-address-mapping-and-caching-for-flash-based-remote-sensing-image-processing"><a href="#Reinforcement-learning-driven-address-mapping-and-caching-for-flash-based-remote-sensing-image-processing" class="headerlink" title="Reinforcement learning-driven address mapping and caching for flash-based remote sensing image processing"></a><strong>Reinforcement learning-driven address mapping and caching for flash-based remote sensing image processing</strong></h1><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a><strong>Introduction</strong></h2><ul>
+<li><p>遥感等地球观测技术生成的图像数据量很大，传统地面站计算方式信息传输量大，计算工作下沉到在轨设备是一种新的趋势。（类似雾计算的概念？）</p>
+</li>
+<li><p>对I/O要求高，遂使用Flash作为数据存储。</p>
+</li>
+<li><p>Flash特性决定采用异地更新策略。</p>
+</li>
+<li><p>FTL在控制器实现，作用是提供地址转换。</p>
+</li>
+<li><p>粒度划分的映射策略：page映射、block映射以及混合映射，本文采用page映射</p>
+</li>
+<li><p>遥感图像处理有其独特的I/O特征、需要高吞吐量以及限制SRAM大小</p>
+<ul>
+<li>张提出基于可能性的缓存管理策略——灵活性差——可通过机器学习改进</li>
+<li>强空间局部性和相关的访问模式</li>
+<li>访问序列是一些小的随机访问的多次重复</li>
+</ul>
+</li>
+</ul>
+<h2 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h2><h3 id="2-1cache替换"><a href="#2-1cache替换" class="headerlink" title="2.1cache替换"></a>2.1cache替换</h3><ul>
+<li><p>f-lash cache替换的特殊特质：</p>
+<ul>
+<li>脏页写回 </li>
+<li>逻辑-物理映射键值对多而SRAM容量小——内部SRAM存储部分常用映射（LRU）</li>
+</ul>
+</li>
+<li><p>将cache分成不同的区域并使用不同的替换策略：如CF LRU分成两个区域working/clean-first只在cf中进行cache回收</p>
+</li>
+<li><p>非冷脏优先存储or热干净优先=&gt;无普适方法</p>
+</li>
+<li><p>本文关注映射而不是实际数据</p>
+</li>
+</ul>
+<h3 id="2-3强化学习"><a href="#2-3强化学习" class="headerlink" title="2.3强化学习"></a>2.3强化学习</h3><ul>
+<li><p>agent 动态随机environment 长期奖励</p>
+</li>
+<li><p>agent根据来自不同环境的reward学习</p>
+</li>
+<li><p>reward源于agent的action</p>
+</li>
+</ul>
+<h2 id="Visual-analysis"><a href="#Visual-analysis" class="headerlink" title="Visual analysis"></a>Visual analysis</h2><ul>
+<li><p>遥感图形处理io trace视觉分析说明有更明显的访问模式：</p>
+<ul>
+<li>连续读写带来的强空间局部性</li>
+<li>不经常重复度- 弱时间局部性</li>
+<li>大的io请求更好的连续性模式 更弱的时间局部性</li>
+<li>时空局部性随时间改变</li>
+</ul>
+<p>res：现有的cache替换算法很难适用于这种特定模式</p>
+</li>
+<li><p>小io：</p>
+<ul>
+<li>logs 写</li>
+<li>metadata图像元数据（时间、格式、地理信息等）读</li>
+</ul>
+</li>
+<li><p>大io：图像本身</p>
+</li>
+<li><p>大io有好的访问模式和空间局部性 但大io仍然可再分 不能简单地使用粗粒度的调度</p>
+</li>
+<li><p>现有的调度算法是content-blind 与内容无关的</p>
+</li>
+<li><p>几种关注内容的ftl</p>
+<ul>
+<li>SFTL 基于bitmap 适用性差</li>
+<li>CDFTL 两级按需缓存-&gt;冗余 为高度规则的io模式设计</li>
+</ul>
+</li>
+<li><p>调度策略：</p>
+<ul>
+<li>大小分开</li>
+<li>读写分开</li>
+<li>适应性好</li>
+<li>总体性能 而非单纯的命中率</li>
+<li>Q-FTL</li>
+</ul>
+</li>
+</ul>
+<h2 id="Methodology"><a href="#Methodology" class="headerlink" title="Methodology"></a>Methodology</h2><ul>
+<li>实时 遥感数据处理 缓存容量有限</li>
+<li>总体性能 应用时间局部性 消耗评估 缓存管理技术</li>
+<li>尽可能减少写脏映射 同时提升命中率</li>
+<li>视作序列预测问题 并用强化学习解决</li>
+</ul>
+<h3 id="4-1-overview"><a href="#4-1-overview" class="headerlink" title="4.1 overview"></a>4.1 overview</h3><ul>
+<li>大小分开</li>
+<li>动态权重计算</li>
+<li>强化学习替换算法</li>
+<li>SRAM两个区域：<ul>
+<li>小元数据：CFLRU</li>
+<li>大真正的图像数据：增强学习进行动态权重计算 </li>
+</ul>
+</li>
+</ul>
+<h3 id="4-2-Workflow-of-cache-management"><a href="#4-2-Workflow-of-cache-management" class="headerlink" title="4.2 Workflow of cache management"></a>4.2 Workflow of cache management</h3><ul>
+<li>翻译成逻辑地址：<ul>
+<li>命中</li>
+<li>不命中：启动替换算法</li>
+</ul>
+</li>
+<li>根据预定义的大小阈值分流请求<ul>
+<li>超过阈值：page-level</li>
+<li>未超阈值：entry-level</li>
+</ul>
+</li>
+<li>page-level<ul>
+<li>命中</li>
+<li>未命中：从entry-level<ul>
+<li>空间足够</li>
+<li>空间不足：使用动态评价模型替换<ul>
+<li>无脏数据</li>
+<li>有脏数据：写回</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>entry-level<ul>
+<li>使用cf-clean</li>
+<li>entry对应的页也在内存中：同时清理</li>
+<li>属于同一页的脏entry一起协会、</li>
+</ul>
+</li>
+<li>CF-LRU：干净的entry比更优先替换，脏entry被保留更久</li>
+</ul>
+<h3 id="4-3-Seperating-large-and-small-I-O-requests"><a href="#4-3-Seperating-large-and-small-I-O-requests" class="headerlink" title="4.3 Seperating large and small I/O requests"></a>4.3 Seperating large and small I/O requests</h3><h3 id="4-4-A-weighting-access-cost-measurement-model"><a href="#4-4-A-weighting-access-cost-measurement-model" class="headerlink" title="4.4. A weighting access cost measurement model"></a>4.4. A weighting access cost measurement model</h3><ul>
+<li>独立请求</li>
+</ul>
+<p>$$<br>Co𝑠𝑡<em>t = {W_w\Sigma^1</em>{k=0}W_k+W_r\Sigma^n_{k=0}R_k \over N}<br>$$</p>
+<p>cost_t代表时间间隔t内的cost</p>
+<p>W_w、W_r代表读写权重n是一个页内的entry数W_k和R_k代表当前页的第k个entry</p>
+<h3 id="4-5-Reinforcement-learning-driven-cache-replacement"><a href="#4-5-Reinforcement-learning-driven-cache-replacement" class="headerlink" title="4.5. Reinforcement learning-driven cache replacement"></a>4.5. Reinforcement learning-driven cache replacement</h3><ul>
+<li><p>低cost的页被优先替换</p>
+</li>
+<li><p>使用强化学习来决定写和读相对权重</p>
+</li>
+<li><p>Q-learning 专注于长期最优解</p>
+</li>
+<li><p>性能和额外开销的平衡</p>
+</li>
+<li><p>强化学习的实现</p>
+<ul>
+<li>agent与cahe flash和io请求交互</li>
+<li>cache等构成env</li>
+<li>actions为cost的比率w 实数且一位小数 而非直接将替换行为作为action</li>
+<li>w∈[1,13) <ul>
+<li>w&lt;1: r比w开销大</li>
+</ul>
+</li>
+<li>State被定义为基于eq1计算的开销</li>
+<li>权重w由强化学习实时调整</li>
+</ul>
+<p>由于数据量会变得很大 在一定时间间隔后将命中/未命中数据一分为二</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/01/24/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3JVM%E7%AC%94%E8%AE%B02%20JAVA%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F/" rel="prev" title="深入理解JVM2 JAVA内存区域">
+      <i class="fa fa-chevron-left"></i> 深入理解JVM2 JAVA内存区域
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Reinforcement-learning-driven-address-mapping-and-caching-for-flash-based-remote-sensing-image-processing"><span class="nav-number">1.</span> <span class="nav-text">Reinforcement learning-driven address mapping and caching for flash-based remote sensing image processing</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">1.1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Related-Work"><span class="nav-number">1.2.</span> <span class="nav-text">Related Work</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1cache%E6%9B%BF%E6%8D%A2"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1cache替换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.3强化学习</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Visual-analysis"><span class="nav-number">1.3.</span> <span class="nav-text">Visual analysis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Methodology"><span class="nav-number">1.4.</span> <span class="nav-text">Methodology</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-overview"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1 overview</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-Workflow-of-cache-management"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.2 Workflow of cache management</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-Seperating-large-and-small-I-O-requests"><span class="nav-number">1.4.3.</span> <span class="nav-text">4.3 Seperating large and small I&#x2F;O requests</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-A-weighting-access-cost-measurement-model"><span class="nav-number">1.4.4.</span> <span class="nav-text">4.4. A weighting access cost measurement model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-5-Reinforcement-learning-driven-cache-replacement"><span class="nav-number">1.4.5.</span> <span class="nav-text">4.5. Reinforcement learning-driven cache replacement</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">AmmoMercy</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ammomercy" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ammomercy" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:chuanjianli@outlook.com" title="E-Mail → mailto:chuanjianli@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      GF's blog
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.yayako.cn/" title="https:&#x2F;&#x2F;www.yayako.cn&#x2F;" rel="noopener" target="_blank">yayako</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AmmoMercy</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
