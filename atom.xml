@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>AmmoMercy的技术博客</title>
+  <icon>http://ammomercy.github.io/icon.png</icon>
+  <subtitle>Stay hungry, stay foolish.</subtitle>
+  <link href="http://ammomercy.github.io/atom.xml" rel="self"/>
+  
+  <link href="http://ammomercy.github.io/"/>
+  <updated>2021-03-08T02:55:39.133Z</updated>
+  <id>http://ammomercy.github.io/</id>
+  
+  <author>
+    <name>AmmoMercy</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>文献阅读：Reinforcement learning-driven address mapping and caching for flash-based remote sensing image processing</title>
+    <link href="http://ammomercy.github.io/2021/03/08/%E6%96%87%E7%8C%AE%E9%98%85%E8%AF%BB/"/>
+    <id>http://ammomercy.github.io/2021/03/08/%E6%96%87%E7%8C%AE%E9%98%85%E8%AF%BB/</id>
+    <published>2021-03-08T02:54:05.726Z</published>
+    <updated>2021-03-08T02:55:39.133Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Reinforcement-learning-driven-address-mapping-and-caching-for-flash-based-remote-sensing-image-processing&quot;&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="文献阅读" scheme="http://ammomercy.github.io/categories/%E6%96%87%E7%8C%AE%E9%98%85%E8%AF%BB/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>解决hexo d  The &quot;mode&quot; argument must be integer. 问题</title>
+    <link href="http://ammomercy.github.io/2021/03/08/2021-03-08-%E8%A7%A3%E5%86%B3hexo-d-The-modeargument-must-be-integer.-%E9%97%AE%E9%A2%98/"/>
+    <id>http://ammomercy.github.io/2021/03/08/2021-03-08-%E8%A7%A3%E5%86%B3hexo-d-The-modeargument-must-be-integer.-%E9%97%AE%E9%A2%98/</id>
+    <published>2021-03-07T16:00:00.000Z</published>
+    <updated>2021-03-08T03:59:48.415Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;在部署hexo时，出现了如下报错&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>深入理解JVM2 JAVA内存区域</title>
+    <link href="http://ammomercy.github.io/2021/01/24/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3JVM%E7%AC%94%E8%AE%B02%20JAVA%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F/"/>
+    <id>http://ammomercy.github.io/2021/01/24/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3JVM%E7%AC%94%E8%AE%B02%20JAVA%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F/</id>
+    <published>2021-01-24T13:47:35.042Z</published>
+    <updated>2021-01-24T13:47:35.042Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;深入理解JVM笔记2&lt;/p&gt;
+&lt;h3 id=&quot;主要内存区域&quot;&gt;&lt;a href=&quot;#主要内存区域&quot; class=&quot;headerlink&quot; title=&quot;主要内存区域&quot;&gt;&lt;/a&gt;主要内存区域&lt;/h3&gt;&lt;h4 id=&quot;程序计数器PC&quot;&gt;&lt;a href=&quot;#程序计数器PC&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="JVM" scheme="http://ammomercy.github.io/categories/JVM/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>深入理解JVM1 JDK、JRE与JVM</title>
+    <link href="http://ammomercy.github.io/2021/01/24/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3JVM%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%201%20JDK%E3%80%81JRE%E4%B8%8EJVM/"/>
+    <id>http://ammomercy.github.io/2021/01/24/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3JVM%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%201%20JDK%E3%80%81JRE%E4%B8%8EJVM/</id>
+    <published>2021-01-24T13:47:35.041Z</published>
+    <updated>2021-01-24T13:47:35.042Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;0-概念&quot;&gt;&lt;a href=&quot;#0-概念&quot; class=&quot;headerlink&quot; title=&quot;0.概念&quot;&gt;&lt;/a&gt;0.概念&lt;/h3&gt;&lt;h4 id=&quot;JVM&quot;&gt;&lt;a href=&quot;#JVM&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="JVM" scheme="http://ammomercy.github.io/categories/JVM/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Flashsim安装与解析</title>
+    <link href="http://ammomercy.github.io/2021/01/24/FlashSim/"/>
+    <id>http://ammomercy.github.io/2021/01/24/FlashSim/</id>
+    <published>2021-01-24T13:47:35.016Z</published>
+    <updated>2021-01-24T13:47:35.016Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;img src=&quot;https://pic-ammomercy-01.oss-cn-beijing.aliyuncs.com/img/20210115090536.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>java编程思想拾珠(随时更新)</title>
+    <link href="http://ammomercy.github.io/2021/01/24/java%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E6%8B%BE%E7%8F%A0/"/>
+    <id>http://ammomercy.github.io/2021/01/24/java%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E6%8B%BE%E7%8F%A0/</id>
+    <published>2021-01-24T13:47:35.016Z</published>
+    <updated>2021-01-24T13:47:35.016Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;this指代当前对象 可以用来放回当前对象或者在构造器中调用其他构造器&lt;/p&gt;
+&lt;p&gt;static方法/成员变量可以通过对象访问 但不推荐&lt;/p&gt;
+&lt;p&gt;条件表达式只能出现布尔值（不能像c++一样出现int 1或0）&lt;/p&gt;
+&lt;p&gt;默认equeals比较引用相当于==</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>关闭hexo next主题的动画</title>
+    <link href="http://ammomercy.github.io/2021/01/24/next%E5%85%B3%E9%97%AD%E5%8A%A8%E7%94%BB/"/>
+    <id>http://ammomercy.github.io/2021/01/24/next%E5%85%B3%E9%97%AD%E5%8A%A8%E7%94%BB/</id>
+    <published>2021-01-24T13:47:35.016Z</published>
+    <updated>2021-01-24T13:47:35.041Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;0-为什么要关闭动画？&quot;&gt;&lt;a href=&quot;#0-为什么要关闭动画？&quot; class=&quot;headerlink&quot; title=&quot;0. 为什么要关闭动画？&quot;&gt;&lt;/a&gt;0. 为什么要关闭动画？&lt;/h1&gt;&lt;p&gt;研究表明，人们可以检测到延迟仅为1/10秒，仅仅1秒钟的延迟就足以打断一个人的自觉思维过程，几秒钟的延迟会严重损害网站用户的体验。当在google搜索到有关内容打开时，不到1s的动画也是令人难以忍受的。我相信，有许多人像我一样对next主题的默认动画深恶痛绝。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="其他" scheme="http://ammomercy.github.io/categories/%E5%85%B6%E4%BB%96/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>【每日一题】2020.01.04 509. 斐波那契数</title>
+    <link href="http://ammomercy.github.io/2021/01/24/2020.01.04_509_%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0/"/>
+    <id>http://ammomercy.github.io/2021/01/24/2020.01.04_509_%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0/</id>
+    <published>2021-01-24T13:47:35.015Z</published>
+    <updated>2021-01-24T13:47:35.016Z</updated>
+    
+    
+    <summary type="html">&lt;h4 id=&quot;509-斐波那契数&quot;&gt;&lt;a href=&quot;#509-斐波那契数&quot; class=&quot;headerlink&quot; title=&quot;509. 斐波那契数&quot;&gt;&lt;/a&gt;&lt;a href=&quot;https://leetcode-cn.com/problems/fibonacci-number/&quot;&gt;509. 斐波那契数&lt;/a&gt;&lt;/h4&gt;&lt;h2 id=&quot;题目描述&quot;&gt;&lt;a href=&quot;#题目描述&quot; class=&quot;headerlink&quot; title=&quot;题目描述:&quot;&gt;&lt;/a&gt;题目描述:&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;斐波那契数&lt;/strong&gt;，通常用 &lt;code&gt;F(n)&lt;/code&gt; 表示，形成的序列称为 &lt;strong&gt;斐波那契数列&lt;/strong&gt; 。该数列由 &lt;code&gt;0&lt;/code&gt; 和 &lt;code&gt;1&lt;/code&gt; 开始，后面的每一项数字都是前面两项数字的和。也就是：&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;F(0) &amp;#x3D; 0，F(1) &amp;#x3D; 1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;F(n) &amp;#x3D; F(n - 1) + F(n - 2)，其中 n &amp;gt; 1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;给你 &lt;code&gt;n&lt;/code&gt; ，请计算 &lt;code&gt;F(n)&lt;/code&gt; 。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;提示：&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;0 &amp;lt;= n &amp;lt;= 30&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="leetcode" scheme="http://ammomercy.github.io/categories/leetcode/"/>
+    
+    
+  </entry>
+  
+</feed>
