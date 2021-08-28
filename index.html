@@ -147,6 +147,90 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://ammomercy.github.io/2021/08/28/hexo+rss/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="AmmoMercy">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AmmoMercy的技术博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/08/28/hexo+rss/" class="post-title-link" itemprop="url">为Hexo博客配置RS</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-08-28 17:51:09 / 修改时间：17:52:15" itemprop="dateCreated datePublished" datetime="2021-08-28T17:51:09+08:00">2021-08-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%8D%9A%E5%AE%A2%E9%85%8D%E7%BD%AE/" itemprop="url" rel="index"><span itemprop="name">博客配置</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>在2021年的今天，RSS其实是一种很小众的信息获取方式。但是It’s pretty cool~话不多说进入正题</p>
+<p>其实RSS本质上是一种存放在服务器上的xml文件，我们只需用<a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo-generator-feed">hexo-generator-feed</a>生成xml文件即可。</p>
+<p>首先使用<code>node install hexo-generator-feed</code>安装插件</p>
+<p>然后在hexo的根目录下添加配置配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">feed:</span><br><span class="line">  enable: true</span><br><span class="line">  type: atom</span><br><span class="line">  path: atom.xml</span><br><span class="line">  limit: 10</span><br><span class="line">  hub:</span><br><span class="line">  content: true</span><br><span class="line">  content_limit: </span><br><span class="line">  content_limit_delim: &#39; &#39;</span><br><span class="line">  order_by: -date</span><br><span class="line">  icon: icon.png</span><br><span class="line">  autodiscovery: true</span><br><span class="line">  template:</span><br></pre></td></tr></table></figure>
+
+<p>配置含义 </p>
+<ul>
+<li><strong>path</strong> - Feed 的路径. 当两种feed方式（atom和RSS2）都配置时，path也需要配置 (默认: atom.xml/rss2.xml)</li>
+<li><strong>limit</strong> - feed一次性最多读取几篇 ( <code>0</code> / <code>false</code>代表全部读取 )</li>
+<li><strong>hub</strong> -  PubSubHubbub的地址</li>
+<li><strong>content</strong> - 为true feed中会包含整篇文章</li>
+<li><strong>content_limit</strong> -文章长度限制 默认为summary的长度</li>
+<li><strong>order_by</strong> - Feed 的排序</li>
+<li><strong>icon</strong> - icon</li>
+</ul>
+<p>配置完毕，hexo clean&amp;&amp;g 生成即可</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://ammomercy.github.io/2021/03/08/%E6%96%87%E7%8C%AE%E9%98%85%E8%AF%BB/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -978,13 +1062,13 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
   </nav>
@@ -995,6 +1079,9 @@
       </span>
       <span class="links-of-author-item">
         <a href="mailto:chuanjianli@outlook.com" title="E-Mail → mailto:chuanjianli@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fas fa-rss fa-fw"></i></a>
       </span>
   </div>
 

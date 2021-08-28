@@ -20,15 +20,19 @@
     var CONFIG = {"hostname":"ammomercy.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="AmmoMercy的技术博客">
-<meta property="og:url" content="http://ammomercy.github.io/categories/%E6%96%87%E7%8C%AE%E9%98%85%E8%AF%BB/index.html">
+  <meta name="description" content="在2021年的今天，RSS其实是一种很小众的信息获取方式。但是It’s pretty cool~话不多说进入正题 其实RSS本质上是一种存放在服务器上的xml文件，我们只需用hexo-generator-feed生成xml文件即可。 首先使用node install hexo-generator-feed安装插件 然后在hexo的根目录下添加配置配置： 12345678910111213feed:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="为Hexo博客配置RS">
+<meta property="og:url" content="http://ammomercy.github.io/2021/08/28/hexo+rss/index.html">
 <meta property="og:site_name" content="AmmoMercy的技术博客">
+<meta property="og:description" content="在2021年的今天，RSS其实是一种很小众的信息获取方式。但是It’s pretty cool~话不多说进入正题 其实RSS本质上是一种存放在服务器上的xml文件，我们只需用hexo-generator-feed生成xml文件即可。 首先使用node install hexo-generator-feed安装插件 然后在hexo的根目录下添加配置配置： 12345678910111213feed:">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-08-28T09:51:09.791Z">
+<meta property="article:modified_time" content="2021-08-28T09:52:15.525Z">
 <meta property="article:author" content="AmmoMercy">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://ammomercy.github.io/categories/%E6%96%87%E7%8C%AE%E9%98%85%E8%AF%BB/">
+<link rel="canonical" href="http://ammomercy.github.io/2021/08/28/hexo+rss/">
 
 
 <script id="page-configurations">
@@ -36,12 +40,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>分类: 文献阅读 | AmmoMercy的技术博客</title>
+  <title>为Hexo博客配置RS | AmmoMercy的技术博客</title>
   
 
 
@@ -141,51 +145,119 @@
         <div class="content-wrap">
           
 
-          <div class="content category">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h2 class="collection-header">文献阅读
-          <small>分类</small>
-        </h2>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://ammomercy.github.io/2021/08/28/hexo+rss/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="AmmoMercy">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AmmoMercy的技术博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          为Hexo博客配置RS
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-08-28 17:51:09 / 修改时间：17:52:15" itemprop="dateCreated datePublished" datetime="2021-08-28T17:51:09+08:00">2021-08-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%8D%9A%E5%AE%A2%E9%85%8D%E7%BD%AE/" itemprop="url" rel="index"><span itemprop="name">博客配置</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2021</span>
+        <p>在2021年的今天，RSS其实是一种很小众的信息获取方式。但是It’s pretty cool~话不多说进入正题</p>
+<p>其实RSS本质上是一种存放在服务器上的xml文件，我们只需用<a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo-generator-feed">hexo-generator-feed</a>生成xml文件即可。</p>
+<p>首先使用<code>node install hexo-generator-feed</code>安装插件</p>
+<p>然后在hexo的根目录下添加配置配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">feed:</span><br><span class="line">  enable: true</span><br><span class="line">  type: atom</span><br><span class="line">  path: atom.xml</span><br><span class="line">  limit: 10</span><br><span class="line">  hub:</span><br><span class="line">  content: true</span><br><span class="line">  content_limit: </span><br><span class="line">  content_limit_delim: &#39; &#39;</span><br><span class="line">  order_by: -date</span><br><span class="line">  icon: icon.png</span><br><span class="line">  autodiscovery: true</span><br><span class="line">  template:</span><br></pre></td></tr></table></figure>
+
+<p>配置含义 </p>
+<ul>
+<li><strong>path</strong> - Feed 的路径. 当两种feed方式（atom和RSS2）都配置时，path也需要配置 (默认: atom.xml/rss2.xml)</li>
+<li><strong>limit</strong> - feed一次性最多读取几篇 ( <code>0</code> / <code>false</code>代表全部读取 )</li>
+<li><strong>hub</strong> -  PubSubHubbub的地址</li>
+<li><strong>content</strong> - 为true feed中会包含整篇文章</li>
+<li><strong>content_limit</strong> -文章长度限制 默认为summary的长度</li>
+<li><strong>order_by</strong> - Feed 的排序</li>
+<li><strong>icon</strong> - icon</li>
+</ul>
+<p>配置完毕，hexo clean&amp;&amp;g 生成即可</p>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
+        
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-03-08T10:54:05+08:00"
-              content="2021-03-08">
-          03-08
-        </time>
-      </div>
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>AmmoMercy
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://ammomercy.github.io/2021/08/28/hexo+rss/" title="为Hexo博客配置RS">http://ammomercy.github.io/2021/08/28/hexo+rss/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/03/08/%E6%96%87%E7%8C%AE%E9%98%85%E8%AF%BB/" itemprop="url">
-            <span itemprop="name">文献阅读：Reinforcement learning-driven address mapping and caching for flash-based remote sensing image processing</span>
-          </a>
-      </div>
 
-    </header>
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/03/08/%E6%96%87%E7%8C%AE%E9%98%85%E8%AF%BB/" rel="prev" title="文献阅读：Reinforcement learning-driven address mapping and caching for flash-based remote sensing image processing">
+      <i class="fa fa-chevron-left"></i> 文献阅读：Reinforcement learning-driven address mapping and caching for flash-based remote sensing image processing
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
   </article>
-
-    </div>
-  </div>
   
   
-  
-
   
 
 
